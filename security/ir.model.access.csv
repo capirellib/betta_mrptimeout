@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_/opt/odoo/sources/betta_mrp_time_out_/opt/odoo/sources/betta_mrp_time_out,/opt/odoo/sources/betta_mrp_time_out./opt/odoo/sources/betta_mrp_time_out,model_/opt/odoo/sources/betta_mrp_time_out_/opt/odoo/sources/betta_mrp_time_out,base.group_user,1,1,1,1

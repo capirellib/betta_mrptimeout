@@ -1,0 +1,106 @@
+
+<odoo>
+  <data>
+    <record id="b_mrp_production_workorder_tree_view" model="ir.ui.view">
+        <field name="name">b.mrp.production.work.order.tree</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_editable_view"/>
+        <field name="arch" type="xml">
+<<<<<<< HEAD
+                
+            <xpath expr="//field[@name='duration']" position="before">
+                
+                <field name="show_ocio" invisible = '0'/>
+                <field name="time_out" widget = 'float_time' readonly = '1' attrs="{'column_invisible': [('show_ocio', '=', 0)]}"/>    
+                <field name="time_out_total" widget="float_time"/>
+
+            </xpath>
+
+
+
+<<<<<<< HEAD
+            <xpath expr="//field[@name='duration']" position="before">
+                
+                <field name="show_ocio" invisible = '0'/>
+                <field name="time_out" widget = 'float_time' readonly = '1' attrs="{'column_invisible': [('show_ocio', '=', 0)]}"/>    
+                <field name="time_out_total" widget="float_time"/>
+
+            </xpath>
+
+=======
+            
+>>>>>>> 50fb9df1e0aa29351470345fc7ec5d73c4b615d7
+=======
+            
+>>>>>>> 50fb9df1e0aa29351470345fc7ec5d73c4b615d7
+            <xpath expr="//button[@name='button_start']" position="after">
+                    <button name="button_scrap" type="object" string="" class="btn-primary" attrs="{'invisible': [('state', 'in', ('cancel', 'draft'))]}" icon="fa-trash-o"/>
+                    <button name="action_desecho" string=""  class="btn-primary" type="object" icon="fa-arrows-v" context="{'module' : 'betta_mrp_scrap'}"/>
+                
+<<<<<<< HEAD
+         <button name="button_Ocio" type="object" string="Ocio Inicio" 
+                    class="btn-light" icon="fa-clock-o" attrs="{'invisible':[('show_ocio','!=',1)]}"/>
+
+
+                <button name="button_Ocio" type="object" string="Ocio Finalizar" 
+                    class="btn-primary" icon="fa-times" attrs="{'invisible': [('show_ocio','!=',2)]}"/>    
+
+                 
+            </xpath>
+              
+
+        </field>
+    </record>
+
+    <record id="b_mrp_production_workorder_form_view" model="ir.ui.view">
+        <field name="name">b.mrp.production.work.order.form</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='time_tracking']//tree/field[@name='duration']" position="before">
+                   
+                <field name="time_out" widget="float_time" sum="Total T.Ocioso"/>
+
+<<<<<<< HEAD
+                <button name="button_Ocio" type="object" string="Ocio Inicio" 
+                    class="btn-light" icon="fa-clock-o" attrs="{'invisible':[('show_ocio','!=',1)]}"/>
+
+
+                <button name="button_Ocio" type="object" string="Ocio Finalizar" 
+                    class="btn-primary" icon="fa-times" attrs="{'invisible': [('show_ocio','!=',2)]}"/>    
+
+                 
+            </xpath>
+              
+
+        </field>
+    </record>
+
+    <record id="b_mrp_production_workorder_form_view" model="ir.ui.view">
+        <field name="name">b.mrp.production.work.order.form</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='time_tracking']//tree/field[@name='duration']" position="before">
+                   
+                <field name="time_out" widget="float_time" sum="Total T.Ocioso"/>
+
+=======
+>>>>>>> 50fb9df1e0aa29351470345fc7ec5d73c4b615d7
+            </xpath>
+
+=======
+            </xpath>
+
+>>>>>>> 50fb9df1e0aa29351470345fc7ec5d73c4b615d7
+        </field>
+    </record>
+ 
+    
+ 
+
+
+  </data>
+</odoo>
