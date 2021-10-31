@@ -11,46 +11,48 @@ class MrpWorkorder(models.Model):
     
     _inherit = 'mrp.workorder'
     
-    
+    show_ocio = fields.Integer(default=0)
+
     time_out =fields.Float(
     'Duracion Ocioso', digits=(16, 2) , default = 0,
     help="Duracion Tiempo Ocioso (en minutes)" )
-    show_ocio = fields.Integer(default=0)
+
+    
     #calc_ocio = fields.Boolean(default=True) ##Permite Iniciar o Detener el RELOJ
     instanteInicial = fields.Datetime()
 
+    @api.onchange('time_out')
     def _compute_timeout(self):
         for order in self:
             timeline_obj = self.env['mrp.workcenter.productivity']
             domain = [('workorder_id', 'in', self.ids)]   
             self.time_out_total = 0
-            #if self.time_out == 0 :
             for timeline in timeline_obj.search(domain):
+                    print(timeline)
                     self.time_out_total = self.time_out_total+timeline.time_out
-
-
-
-
-
+        
+    
 
     time_out_total = fields.Float(
         'T.Ocioso', compute=_compute_timeout, store=False)
         #, inverse='_set_duration',
         #readonly=False, store=True, copy=False)
 
-
+    
     def button_start(self):
         self.show_ocio = 1
         return super().button_start()
 
 
     def button_finish(self):
+        print("button_finish")
         if self.show_ocio == 2:
             self.button_Ocio()
         self.show_ocio = 0
         return super().button_finish()
 
     def button_pending(self):
+        print("button_pending")
         if self.show_ocio == 2:
             self.button_Ocio()
         self.show_ocio = 0
@@ -127,6 +129,8 @@ class MrpWorkcenterProductivity(models.Model):
         'Ocioso Total', digits=(16, 2),
         help="Duracion Tiempo Ocioso (en minutes)")    
 
+    time_out_total = fields.Float(
+        'T.Ocioso', store=True)
 
     # def button_scrap(self):
     #     self.ensure_one()
