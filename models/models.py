@@ -21,16 +21,15 @@ class MrpWorkorder(models.Model):
     #calc_ocio = fields.Boolean(default=True) ##Permite Iniciar o Detener el RELOJ
     instanteInicial = fields.Datetime()
 
-    @api.onchange('time_out')
+    #@api.onchange('time_out')
     def _compute_timeout(self):
         for order in self:
             timeline_obj = self.env['mrp.workcenter.productivity']
             domain = [('workorder_id', 'in', self.ids)]   
             self.time_out_total = 0
             for timeline in timeline_obj.search(domain):
-                    print(timeline)
-                    self.time_out_total = self.time_out_total+timeline.time_out
-        
+                    self.time_out_total = timeline.time_out + self.time_out_total
+            self.time_out_total = self.time_out_total +self.time_out
     
 
     time_out_total = fields.Float(
@@ -45,14 +44,12 @@ class MrpWorkorder(models.Model):
 
 
     def button_finish(self):
-        
         if self.show_ocio == 2:
             self.button_Ocio()
         self.show_ocio = 0
         return super().button_finish()
 
     def button_pending(self):
-        
         if self.show_ocio == 2:
             self.button_Ocio()
         self.show_ocio = 0
@@ -97,6 +94,7 @@ class MrpWorkorder(models.Model):
                 raise UserError(_("You need to define at least one unactive productivity loss in the category 'Performance'. Create one from the Manufacturing app, menu: Configuration / Productivity Losses."))
 
             not_productive_timelines.write({'loss_id': loss_id.id})
+        self._compute_timeout()
         return True
 
     def button_Ocio(self):
@@ -129,8 +127,8 @@ class MrpWorkcenterProductivity(models.Model):
         'Ocioso Total', digits=(16, 2),
         help="Duracion Tiempo Ocioso (en minutes)")    
 
-    time_out_total = fields.Float(
-        'T.Ocioso', store=True)
+    #time_out_total = fields.Float(
+    #    'T.Ocioso', store=True)
 
     # def button_scrap(self):
     #     self.ensure_one()

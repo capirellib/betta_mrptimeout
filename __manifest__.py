@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "MRP Betta Desperdicios",
+    'name': "MRP Betta Tiempo Ocioso",
 
     'summary': """
-        Agrega mvimientos de desperdicio dede la Vista  
-        Ordenes de Trabajos """,
+        Movimientos Ocio , Encender maquinas , Preparar equipos 
+        en la Orden de Trabajo """,
 
     'description': """
-        Control de Desperdicios dede Ordenes de Traabajo  
+        Control de Tiempo Ociosoen  Ordenes de Traabajo  
     """,
 
     'author': "Betta ERP - (Carlos E. Pirelli)",
