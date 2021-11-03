@@ -45,14 +45,14 @@ class MrpWorkorder(models.Model):
 
 
     def button_finish(self):
-        print("button_finish")
+        
         if self.show_ocio == 2:
             self.button_Ocio()
         self.show_ocio = 0
         return super().button_finish()
 
     def button_pending(self):
-        print("button_pending")
+        
         if self.show_ocio == 2:
             self.button_Ocio()
         self.show_ocio = 0
