@@ -10,7 +10,7 @@
             
             <xpath expr="//field[@name='duration']" position="before">
                 
-                <field name="show_ocio" invisible = '0'/>
+                <field name="show_ocio" invisible = '1'/>
                 <field name="time_out" widget = 'float_time'  readonly = '1' attrs="{'invisible':[('show_ocio','=',0)]}"/>    
 
                 <field name="time_out_total" widget="float_time"/>
