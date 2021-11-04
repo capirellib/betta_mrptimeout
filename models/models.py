@@ -23,13 +23,14 @@ class MrpWorkorder(models.Model):
 
     #@api.onchange('time_out')
     def _compute_timeout(self):
+        self.time_out_total = 0
         for order in self:
-            timeline_obj = self.env['mrp.workcenter.productivity']
-            domain = [('workorder_id', 'in', self.ids)]   
-            self.time_out_total = 0
-            for timeline in timeline_obj.search(domain):
-                    self.time_out_total = timeline.time_out + self.time_out_total
-            self.time_out_total = self.time_out_total +self.time_out
+            timeline_obj = self.env['mrp.workcenter.productivity'].search([('workorder_id', '=', order.id)])
+            for timeline in timeline_obj:
+                    #self.time_out = timeline.time_out+order.time_out
+                    self.time_out_total = timeline.time_out + order.time_out_total
+                
+        #self.time_out_total = self.time_out_total +self.time_out
     
 
     time_out_total = fields.Float(
@@ -124,7 +125,7 @@ class MrpWorkcenterProductivity(models.Model):
     _inherit = 'mrp.workcenter.productivity'
 
     time_out = fields.Float(
-        'Ocioso Total', digits=(16, 2),
+        'Ocioso Total', digits=(16, 2), default=0,
         help="Duracion Tiempo Ocioso (en minutes)")    
 
     #time_out_total = fields.Float(
