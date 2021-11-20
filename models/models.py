@@ -21,22 +21,20 @@ class MrpWorkorder(models.Model):
     #calc_ocio = fields.Boolean(default=True) ##Permite Iniciar o Detener el RELOJ
     instanteInicial = fields.Datetime()
 
-    #@api.onchange('time_out')
-    def _compute_timeout(self):
-        self.time_out_total = 0
-        for order in self:
-            timeline_obj = self.env['mrp.workcenter.productivity'].search([('workorder_id', '=', order.id)])
-            for timeline in timeline_obj:
-                    #self.time_out = timeline.time_out+order.time_out
-                    self.time_out_total = timeline.time_out + order.time_out_total
-                
-        #self.time_out_total = self.time_out_total +self.time_out
+    order_ids = fields.One2many(
+        'mrp.workcenter.productivity', 'workorder_id',  copy=False)
     
 
+
+                
+    @api.depends('order_ids.time_out')  
+    def _compute_timeout(self):
+        for order in self:
+            order.time_out_total = sum(order.order_ids.mapped('time_out'))
+
     time_out_total = fields.Float(
-        'T.Ocioso', compute=_compute_timeout, store=False)
-        #, inverse='_set_duration',
-        #readonly=False, store=True, copy=False)
+        'T.Ocioso', compute=_compute_timeout)
+
 
     
     def button_start(self):
@@ -128,38 +126,5 @@ class MrpWorkcenterProductivity(models.Model):
         'Ocioso Total', digits=(16, 2), default=0,
         help="Duracion Tiempo Ocioso (en minutes)")    
 
-    #time_out_total = fields.Float(
-    #    'T.Ocioso', store=True)
-
-    # def button_scrap(self):
-    #     self.ensure_one()
-    #     return {
-    #         'name': ('Scrap'),
-    #         'view_mode': 'form',
-    #         'res_model': 'stock.scrap',
-    #         'view_id': self.env.ref('stock.stock_scrap_form_view2').id,
-    #         'type': 'ir.actions.act_window',
-    #         'context': {'default_production_id': self.production_id.id,
-    #                     'product_ids': (self.move_raw_ids.filtered(lambda x: x.state not in ('done', 'cancel')) | self.move_finished_ids.filtered(lambda x: x.state == 'done')).mapped('product_id').ids,
-    #                     'default_company_id': self.production_id.company_id.id,
-    #                     'module' : 'betta_mrp_scrap'
-    #                     },
-    #         'target': 'new',
-    #     }
-
-    # def action_desecho(self):
-    #     #self.mostrarbutton = True
-    #     self.ensure_one()
-    #     return {
-    #         'name': ('Desechos'),
-    #         'view_mode': 'tree',
-    #         'res_model': 'stock.scrap',
-    #         'domain':[('production_id', '=', self.production_id.id)],
-    #         'type': 'ir.actions.act_window',
-    #         'view_id' : False,
-    #         'target': 'new',
-    #         'flags': {'action_buttons': False},
-    #         'context': {'module' : 'betta_mrp_scrap'},
-    #         }
 
 

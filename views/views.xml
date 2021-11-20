@@ -13,7 +13,7 @@
                 <field name="show_ocio" invisible = '1'/>
                 <field name="time_out" widget = 'float_time'  readonly = '1' attrs="{'invisible':[('show_ocio','=',0)]}"/>    
 
-                <field name="time_out_total" widget="float_time"/>
+                <field name="time_out_total" widget = 'float_time'/>
 
             </xpath>
 
@@ -41,42 +41,25 @@
         <field name="arch" type="xml">
 
             <xpath expr="//page[@name='time_tracking']//tree/field[@name='duration']" position="before">
-                   
-               <!--<field name="time_out_total" widget="float_time" sum="Total T.Ocioso"/>-->
 
-                <field name="time_out" widget="float_time" sum="Total T.Ocioso"/>
-              <!--  <button name="button_Ocio" type="object" string="Ocio Inicio" 
-                    class="btn-light" icon="fa-clock-o" attrs="{'invisible':[('show_ocio','!=',1)]}"/>
-
-
-                <button name="button_Ocio" type="object" string="Ocio Finalizar" 
-                    class="btn-primary" icon="fa-times" attrs="{'invisible': [('show_ocio','!=',2)]}"/> -->   
-
-                 
+                <field name="time_out" sum="Total T.Ocioso" widget = 'float_time'/>
             </xpath>
               
 
         </field>
     </record> 
 
-    <!-- <record id="b_mrp_production_workorder_form_view" model="ir.ui.view">
-        <field name="name">b.mrp.production.work.order.form</field>
-        <field name="model">mrp.workorder</field>
-        <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"/>
+    <record id="b_mrp_oee_tree_view" model="ir.ui.view">
+        <field name="name">b.mrp.workcenter.productivity.tree</field>
+        <field name="model">mrp.workcenter.productivity</field>
+        <field name="inherit_id" ref="mrp.oee_tree_view"/>
         <field name="arch" type="xml">
 
-            <xpath expr="//page[@name='time_tracking']//tree/field[@name='duration']" position="before">
-                   
-                <field name="time_out" widget="float_time" sum="Total T.Ocioso"/>
-
-            </xpath> 
-
-
+            <xpath expr="//field[@name='duration']" position="before">
+                <field name="time_out" widget = 'float_time'  readonly = '1'/>    
+            </xpath>
         </field>
-    </record>-->
- 
-    
- 
+    </record>
 
 
   </data>
