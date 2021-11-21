@@ -61,6 +61,24 @@
         </field>
     </record>
 
+    <record id="b_mrp_workcenter_line_pivot" model="ir.ui.view">
+        <field name="name">b.mrp.production.work.order.pivot</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.workcenter_line_pivot"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='duration']" position="before">
+                <field name="time_out" widget = 'float_time'  readonly = '1'/>  
+                
+            
+            </xpath>
+        </field>
+    </record>
+
+
+
+
+
 
   </data>
 </odoo>
